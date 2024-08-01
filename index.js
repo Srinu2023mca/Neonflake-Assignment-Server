@@ -1,12 +1,18 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const mediaRoutes = require('./routes/media');
-require('dotenv').config();
+const mediaRouter = require('./routes/media');
 
 const app = express();
 
-app.use(cors());
+app.use(cors(
+    {
+        origin:"*",
+        methods:["GET","POST","PUT","DELETE"]
+    }
+));
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI, {
@@ -16,7 +22,7 @@ mongoose.connect(process.env.MONGO_URI, {
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
 
-app.use('/api/media', mediaRoutes);
+app.use('/api/media', mediaRouter);
 
 app.get("/",(req,res)=>{
     res.send("API running")
