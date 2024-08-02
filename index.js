@@ -25,7 +25,7 @@ mongoose.connect(process.env.MONGO_URI, {
 app.use('/api/media', mediaRouter);
 
 app.get("/",(req,res)=>{
-    res.send("API running 😊")
+    res.send("API running")
 });
 
 const PORT = process.env.PORT || 5000;
