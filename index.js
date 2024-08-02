@@ -14,6 +14,7 @@ app.use(cors(
         allowedHeaders: ['Content-Type', 'Authorization']
     }
 ));
+app.options('*', cors());  // Handle preflight requests globally
 
 require('dotenv').config();
 mongoose.connect(process.env.MONGO_URI, {
@@ -28,6 +29,10 @@ app.use('/api/media', mediaRouter);
 
 app.get("/",(req,res)=>{
     res.send("API running")
+});
+
+app.post('/api/test', (req, res) => {
+    res.json({ message: 'Test POST successful' });
 });
 
 const PORT = process.env.PORT || 5000;
