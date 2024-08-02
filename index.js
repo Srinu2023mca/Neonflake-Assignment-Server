@@ -5,12 +5,13 @@ const cors = require('cors');
 const mediaRouter = require('./routes/media');
 
 const app = express();
-app.use(express.json());
+
 
 app.use(cors(
     {
         origin:"*",
-        methods:["GET","POST","PUT","DELETE"]
+        methods:["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ['Content-Type', 'Authorization']
     }
 ));
 
@@ -21,7 +22,8 @@ mongoose.connect(process.env.MONGO_URI, {
 })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
-
+    
+app.use(express.json());
 app.use('/api/media', mediaRouter);
 
 app.get("/",(req,res)=>{
